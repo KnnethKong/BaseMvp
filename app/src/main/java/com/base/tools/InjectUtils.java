@@ -1,8 +1,6 @@
 package com.base.tools;
 
-
-import com.base.annotation.ContentView;
-import com.base.annotation.ViewInject;
+import com.base.annotation.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -12,77 +10,43 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by KXF on 2018/5/16.
+ * 作者: Dream on 2017/8/26 22:29
+ * QQ:510278658
+ * E-mail:510278658@qq.com
  */
 
 public class InjectUtils {
-    public static void inject(Object o) {
-        injectlayout(o);
-        Map<Integer, Object> viewMap = injectView(o);
-        injectEvent(o,viewMap);
+
+    public static void inject(Object obj) {
+        injectLayout(obj);
+        Map<Integer, Object> viewMap = injectView(obj);
+//        injectEvent_2_0(obj, viewMap);
+        injectEvent_3_0(obj, viewMap);
     }
 
-    private static void injectlayout(Object o) {
-        Class<?> handlerType = o.getClass();
+
+    public static void injectLayout(Object obj) {
+        // 获取Activity的ContentView的注解
+        Class<?> handlerType = obj.getClass();
         try {
+            //获取类对象身上的注解
             ContentView contentView = handlerType.getAnnotation(ContentView.class);
             if (contentView != null) {
+                //获取布局ID
                 int viewId = contentView.value();
                 if (viewId > 0) {
-                    Method setContentViewMethod = handlerType.getMethod("setContentView", int.class);
-                    setContentViewMethod.invoke(o, viewId);
+                    Method setContentViewMethod = handlerType.getMethod(
+                            "setContentView", int.class);
+                    setContentViewMethod.invoke(obj, viewId);
                 }
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable ex) {
+            ex.printStackTrace();
         }
-
     }
 
-   /* private static void injectView(Object o) {
-        Class<?> handlerType = o.getClass();//获取类对象
-        Field[] fields = handlerType.getFields();//获取对象属性列表
-        if (fields != null && fields.length > 0) {
-            for (Field field : fields) {//遍历
-                Class<?> filedType = field.getType();
-                if (Modifier.isStatic(field.getModifiers()) ||//静态字段
-                        Modifier.isFinal(field.getModifiers()) ||//final字段
-                        filedType.isPrimitive() || //基本数据字段
-                        filedType.isArray()) //数组类型字段
-                {
-                    continue;
-                }
-
-                ViewInject viewInject=field.getAnnotation(ViewInject.class);//获得属性注解
-                if (viewInject!=null){
-
-                    try {
-                        int viewid=viewInject.value();
-                        Method byIdMethod=handlerType.getMethod("findViewById",int.class);//获取方法
-                      Object view=  byIdMethod.invoke(o,viewid);//执行对象
-
-                      if (view!=null){
-                          field.setAccessible(true);//修改访问权限
-                          field.set(o,view);//赋值
-                      }else{
-                          throw  new RuntimeException("injectView RuntimeException"+handlerType.getSimpleName()+" . "+field.getName() );
-                      }
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-
-            }
-
-        }
-    }*/
-
-
-    private static Map<Integer, Object> injectView(Object handler) {
-        Map<Integer, Object> viewMap = new HashMap<>();
+    public static Map<Integer, Object> injectView(Object handler) {
+        Map<Integer, Object> viewMap = new HashMap<Integer, Object>();
         //获取类对象
         Class<?> handlerType = handler.getClass();
         //获取对象属性列表
@@ -96,7 +60,7 @@ public class InjectUtils {
                 Class<?> fieldType = field.getType();
                 if (
                 /* 不注入静态字段 */Modifier.isStatic(field.getModifiers()) ||
-                /* 不注入final字段 */Modifier.isFinal(field.getModifiers()) ||
+				/* 不注入final字段 */Modifier.isFinal(field.getModifiers()) ||
 				/* 不注入基本类型字段(int、double、float、char、boolean等等...) */fieldType.isPrimitive() ||
 				/* 不注入数组类型字段 */fieldType.isArray()) {
                     continue;
@@ -112,7 +76,7 @@ public class InjectUtils {
                         Method findViewByIdMethod = handlerType.getMethod(
                                 "findViewById", int.class);
                         //执行findViewById方法，获取对象
-                        Object view = findViewByIdMethod.invoke(handler, viewId);
+                        Object view = findViewByIdMethod.invoke(handler,viewId);
                         if (view != null) {
                             //修改访问权限(private)
                             //setAccessible:将属性修饰符修改为public
@@ -137,7 +101,8 @@ public class InjectUtils {
     }
 
 
-    public static void injectEvent(Object obj, Map<Integer, Object> viewMap){
+    //2.0版本->实现
+    public static void injectEvent_2_0(Object obj, Map<Integer, Object> viewMap){
         //获取类对象
         Class<?> handlerType = obj.getClass();
         //获取对象方法->activity
@@ -153,7 +118,7 @@ public class InjectUtils {
                         //获取注解身上注解
                         //获取注解类型
                         Class<?> annType = annotation.annotationType();
-                        if (annType.getAnnotation(EventBase.class) != null) {
+                        if (annType.getAnnotation(com.base.annotation.EventBase.class) != null) {
                             method.setAccessible(true);
                             try {
                                 //获取注解value方法
@@ -167,7 +132,7 @@ public class InjectUtils {
                                     int viewId = values[i];
                                     Object view = viewMap.get(viewId);
                                     //对事件进行动态代理
-                                    EventListenerManager.addEventMethod(annotation, obj, method, view);
+                                    EventListenerManager.addEventMethod_2_0(annotation, obj, method, view);
                                 }
                             } catch (Throwable e) {
                                 e.printStackTrace();
@@ -178,4 +143,46 @@ public class InjectUtils {
             }
         }
     }
+
+    //3.0版本->实现
+    public static void injectEvent_3_0(Object handler, Map<Integer, Object> viewMap){
+        //获取类对象
+        Class<?> handlerType = handler.getClass();
+        //获取对象方法->activity
+        Method[] methods = handlerType.getDeclaredMethods();
+        if (methods != null && methods.length > 0) {
+            for (Method method : methods) {
+
+                // 注意：静态方法不允许添加控件注解,私有方法运行访问，非私有方法不允许访问
+                // 在XUtils框架3.0之后，要求我们的方法必须是私有方法(注意：public不行)
+                // 希望该方法配置了注解，不希望子类继承，只有当前类可以享受
+                if (Modifier.isStatic(method.getModifiers())) {
+                    continue;
+                }
+
+                // 检查当前方法是否是event注解的方法
+                Event event = method.getAnnotation(Event.class);
+                if (event != null) {
+                    try {
+                        // id参数
+                        int[] values = event.value();
+                        // 循环所有id，生成ViewInfo并添加代理反射
+                        for (int i = 0; i < values.length; i++) {
+                            int valueId = values[i];
+                            if (valueId > 0) {
+                                Object view = viewMap.get(valueId);
+                                // ViewInfo info = new ViewInfo();
+                                // 不管你再怎么样，永远都会创建对象
+                                method.setAccessible(true);
+                                EventListenerManager.addEventMethod_3_0(event, handler, method, view);
+                            }
+                        }
+                    } catch (Throwable ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
 }

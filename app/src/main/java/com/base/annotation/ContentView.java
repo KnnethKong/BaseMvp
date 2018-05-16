@@ -5,12 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Created by KXF on 2018/5/16.
- */
-
-@Target(ElementType.TYPE)//作用在类
-@Retention(RetentionPolicy.RUNTIME)//运行时
+//类注解
+//Target:作用目标->作用在类身上(ElementType.TYPE)
+@Target(ElementType.TYPE)
+//Retention:生命周期->运行时注解(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface ContentView {
+    //布局ID
     int value();
 }

@@ -15,6 +15,8 @@
 
 package com.base.tools;
 
+import com.base.annotation.*;
+
 import java.lang.annotation.Annotation;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
@@ -29,12 +31,12 @@ public class EventListenerManager {
     private EventListenerManager() {
     }
 
-    public static void addEventMethod(
+    public static void addEventMethod_2_0(
             Annotation eventAnnotation, Object handler, Method method, Object view) {
         try {
             if (view != null) {
-                EventBase eventBase = eventAnnotation.annotationType()
-                        .getAnnotation(EventBase.class);
+                com.base.annotation.EventBase eventBase = eventAnnotation.annotationType()
+                        .getAnnotation(com.base.annotation.EventBase.class);
                 // 监听类型:OnClickListener、OnTouchListener、OnLongClickListener等等......
                 Class<?> listenerType = eventBase.listenerType();
                 // 事件源(你要给那个View绑定监听，而且该监听对应的方法)
@@ -47,21 +49,58 @@ public class EventListenerManager {
                 // 从缓存中获取
                 // 提高了性能，节约内存
 
-                Object listener = null;
+                Object proxy = null;
 
                 // 第一次添加监听
                 dynamicHandler = new DynamicHandler(handler);
                 dynamicHandler.addMethod(methodName, method);
 
-                // listener：代理对象
-                listener = Proxy.newProxyInstance(
+                // proxy：代理对象
+                proxy = Proxy.newProxyInstance(
                         listenerType.getClassLoader(),
                         new Class<?>[]{listenerType}, dynamicHandler);
 
                 // 绑定监听
                 Method setEventListenerMethod = view.getClass().getMethod(
                         listenerSetter, listenerType);
-                setEventListenerMethod.invoke(view, listener);
+                setEventListenerMethod.invoke(view, proxy);
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addEventMethod_3_0(
+            Event event, Object handler, Method method, Object view) {
+        try {
+            if (view != null && event != null) {
+                // 监听类型:OnClickListener、OnTouchListener、OnLongClickListener等等......
+                Class<?> listenerType = event.type();
+                // 事件源(你要给那个View绑定监听，而且该监听对应的方法)
+                // View.setOnClickListener() View.setOnTouchListener
+                // View.setOnLongClickListener
+                String listenerSetter = event.setter();
+                // 监听方法: onClick方法、onTouch、onLongClick方法
+                String methodName = event.method();
+
+                // 从缓存中获取
+                // 提高了性能，节约内存
+
+                Object proxy = null;
+
+                // 第一次添加监听
+                dynamicHandler = new DynamicHandler(handler);
+                dynamicHandler.addMethod(methodName, method);
+
+                // proxy：代理对象
+                proxy = Proxy.newProxyInstance(
+                        listenerType.getClassLoader(),
+                        new Class<?>[]{listenerType}, dynamicHandler);
+
+                // 绑定监听
+                Method setEventListenerMethod = view.getClass().getMethod(
+                        listenerSetter, listenerType);
+                setEventListenerMethod.invoke(view, proxy);
             }
         } catch (Throwable e) {
             e.printStackTrace();
