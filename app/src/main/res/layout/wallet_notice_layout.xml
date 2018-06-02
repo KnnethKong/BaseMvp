@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/notice_import"
+        android:layout_marginBottom="30dp"
+        android:text="创建钱包" />
+
+    <Button
+        android:id="@+id/notice_import"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="导入钱包" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notice_import"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"
+        android:text="您的资产在这里安全增值" />
+
+
+</RelativeLayout>

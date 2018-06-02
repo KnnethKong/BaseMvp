@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp">
+
+    <ImageView
+        android:id="@+id/coin_choose_item_img"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/coin_choose_item_jc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/coin_choose_item_img"
+        android:text="简称" />
+
+    <TextView
+        android:id="@+id/coin_choose_item_qc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/coin_choose_item_jc"
+        android:layout_below="@id/coin_choose_item_jc"
+        android:layout_marginTop="4dp"
+        android:text="全称"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/coin_choose_item_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/coin_choose_item_qc"
+        android:layout_marginTop="4dp"
+        android:layout_alignStart="@id/coin_choose_item_jc"
+        android:text="地址"
+        android:textSize="10sp" />
+
+    <Switch
+        android:id="@+id/coin_choose_item_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>
+

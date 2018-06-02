@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/test_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+       <Button
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/test_linear_con"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/aqua"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/test_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:text="121232" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/test_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/test_relative_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="12322" />
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/ic_launcher" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

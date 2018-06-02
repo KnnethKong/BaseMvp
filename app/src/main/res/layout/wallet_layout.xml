@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?><!--<com.aspsine.swipetoloadlayout.SwipeToLoadLayout--><!--android:id="@+id/swipload"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">-->
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:background="@color/fdedd">
+
+            <ImageView
+                android:id="@+id/wallet_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/wallet_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/wallet_img"
+                android:layout_centerHorizontal="true"
+                android:text="djsdh" />
+
+
+            <TextView
+                android:id="@+id/wallet_zzc_cny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:text="总资产 CNY" />
+
+            <TextView
+                android:id="@+id/wallet_zzc_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="10dp"
+                android:text="= ¥ 800.84" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/wallet_add_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="添加资产 "
+                android:textColor="@color/blue" />
+
+            <TextView
+                android:id="@+id/wallet_hide_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/wallet_add_money"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:text="隐藏0元资产"
+                android:textColor="@color/blue" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/wallet_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/wallet_add_money"
+                android:layout_marginTop="20dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>
+
+    <!--</com.aspsine.swipetoloadlayout.SwipeToLoadLayout>-->

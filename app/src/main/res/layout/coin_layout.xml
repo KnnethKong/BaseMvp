@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12 ether"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sjdjsjdhskslsskasjjs" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/coin_wy1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="钱包名" />
+
+        <TextView
+            android:id="@+id/coin_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/coin_wy1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="test2" />
+
+        <TextView
+            android:id="@+id/coin_change_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/coin_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:drawableRight="@mipmap/more"
+            android:text="修改密码"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/coin_import_key"
+
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/coin_change_pwd"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:drawableRight="@mipmap/more"
+            android:text="导出私钥"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/coin_import_keystore"
+
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/coin_import_key"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:drawableRight="@mipmap/more"
+            android:text="导出keystore"
+            android:textSize="16sp" />
+
+
+        <Button
+            android:id="@+id/coin_del_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="6dp"
+            android:background="@color/btn_hui"
+            android:text="删除钱包"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/coin_del_btn"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@color/qian_lv"
+            android:padding="4dp"
+            android:text="备份助记词"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
