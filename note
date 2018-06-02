@@ -1,0 +1,18 @@
+mvp :
+m-数据层，网络/数据库/文件
+v-view和activity/fragment以及他们的子类
+p-中介presenter将m与v进行交互和数据传递
+
+
+mvc
+m-bean对象，v-view以及子类，c-fragment/activity子类
+
+
+
+mvp 优化
+1.将presenter的构造方法参数view去除，添加attcahView，detachView方法。在activity中destroy调用detach置空防止泄漏。
+2。提取presenter公共方法为父类。
+3。提取baseview在presenter中操作baseview而不再操作子view。
+4。presenter子类每一次类型都需要强制转换具体子view。采用泛型在basePresent中<v extends BaseView>
+5.如果多个activity和fragemnt 会造成冗余，抽象baseActivity,baseActivity 对presenter，view进行再次抽象
+
