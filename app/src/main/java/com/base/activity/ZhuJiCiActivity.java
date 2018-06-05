@@ -21,11 +21,13 @@ import com.base.db.BaseDaoFactory;
 import com.base.db.IBaseDao;
 import com.base.db.WalletDao;
 import com.base.db.WalletEntity;
+import com.base.db.WalletItemEntity;
 import com.base.draw.JZCLayout;
 import com.base.draw.LineeLayout;
 import com.base.keyboard.LoginKeyBoard;
 import com.base.mvp.R;
 import com.base.tools.ArrayUtils;
+import com.base.wallet.WalletCoinDetailEntity;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ public class ZhuJiCiActivity extends AppCompatActivity implements View.OnClickLi
     private List<String> tempList = new ArrayList<>();
     private SwipeToLoadLayout swipeToLoadLayout;
     private IBaseDao<WalletEntity> walletEntityIBaseDao;
+    private IBaseDao<WalletItemEntity> walletItemEntityIBaseDao;
     private EditText zjcedit;
 
     @Override
@@ -59,23 +62,23 @@ public class ZhuJiCiActivity extends AppCompatActivity implements View.OnClickLi
         //rrayList<String> datas =
         initData();
         initView(localDatas);
-        final LoginKeyBoard loginKeyBoard = new LoginKeyBoard(this);
-        zjcedit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    loginKeyBoard.attachTo(zjcedit);
-                }
-            }
-        });
-
-        zjcedit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (loginKeyBoard.isAttached) loginKeyBoard.showKeyboard();
-                else loginKeyBoard.attachTo(zjcedit);
-            }
-        });
+//        final LoginKeyBoard loginKeyBoard = new LoginKeyBoard(this);
+//        zjcedit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    loginKeyBoard.attachTo(zjcedit);
+//                }
+//            }
+//        });
+//
+//        zjcedit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (loginKeyBoard.isAttached) loginKeyBoard.showKeyboard();
+//                else loginKeyBoard.attachTo(zjcedit);
+//            }
+//        });
 
     }
 
@@ -93,31 +96,51 @@ public class ZhuJiCiActivity extends AppCompatActivity implements View.OnClickLi
         localDatas.add("content");
         localDatas.add("build");
         localDatas.add("edit");
-        insert();
+        new Thread(){
+            @Override
+            public void run() {
+                insert();
+            }
+        }.start();
         return localDatas;
     }
 
 
     private void insert() {
         walletEntityIBaseDao = BaseDaoFactory.getInstance().getDataHelper(WalletDao.class, WalletEntity.class);
+
+
 //        WalletEntity walletEntity = new WalletEntity(System.currentTimeMillis(), "ht", "miyao", "pwd", "pwdnotice", "keystore");
 //
 //        Long i = walletEntityIBaseDao.insert(walletEntity);
 //        Log.e(TAG, "insert: " + i);
         WalletEntity queryEntity = new WalletEntity();
-        queryEntity.setName("ht");
+        //queryEntity.setName("ht");
         List<WalletEntity> list1 = walletEntityIBaseDao.query(
                 queryEntity
         );
-        Log.e(TAG, "list: " + list1.size());
+        List<WalletEntity> list2 = walletEntityIBaseDao.queryAll(WalletEntity.class);
+        for (int i=0;i<list1.size();i++){
+            WalletEntity walletEntity=list1.get(i);
+            WalletEntity walletEntity2=list2.get(i);
 
-        WalletEntity updateEntity = new WalletEntity();
-        updateEntity.setName("ht1");
-        int count = walletEntityIBaseDao.update(updateEntity, queryEntity);
-        Log.e(TAG, "update: " + count);
+            Log.e(TAG, "walletEntity: " + walletEntity.toString()+ "  ");
+            Log.e(TAG, "walletEntity2: " + walletEntity2.toString()+ "  ");
 
-        List<WalletEntity> list = walletEntityIBaseDao.query(updateEntity);
-        Log.e(TAG, "list : " + list.size());
+        }
+
+
+       // Log.e(TAG, "list: " + list1.size() + "  ");
+//        Log.e(TAG, "list2  : " + list2.size() + "  ");
+
+//        WalletEntity updateEntity = new WalletEntity();
+//        updateEntity.setName("ht1");
+//        int count = walletEntityIBaseDao.update(updateEntity, queryEntity);
+//        Log.e(TAG, "update: " + count);
+//
+//        List<WalletEntity> list = walletEntityIBaseDao.query(updateEntity);
+//        Log.e(TAG, "list : " + list.size());
+
 
     }
 
@@ -155,7 +178,6 @@ public class ZhuJiCiActivity extends AppCompatActivity implements View.OnClickLi
     @SuppressLint("ResourceType")
     @Override
     public void onClick(View view) {
-        Log.e(TAG, "  onClick:   " + view.getId());
         if (view.getId() >= 100 && view.getId() < 114) {
             TextView textView = (TextView) view;
             String str = textView.getText().toString();
@@ -171,13 +193,10 @@ public class ZhuJiCiActivity extends AppCompatActivity implements View.OnClickLi
 
     private void removeAll() {
         int childCount = bottomRelative.getChildCount();
-        Log.e(TAG, "  childCount :   " + childCount);
         bottomRelative.removeAllViewsInLayout();
         int twocount = bottomRelative.getChildCount();
-        Log.e(TAG, "  twocount :   " + twocount);
         bottomRelative.removeAllViews();
         int three = bottomRelative.getChildCount();
-        Log.e(TAG, "  three :   " + three);
     }
 
 

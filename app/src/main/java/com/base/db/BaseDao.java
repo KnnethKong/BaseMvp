@@ -99,6 +99,14 @@ public abstract class BaseDao<T> implements IBaseDao<T> {
     }
 
     @Override
+    public int deleteAll() {
+
+        int reslut = database.delete(tableName, null, null);
+
+        return reslut;
+    }
+
+    @Override
     public int delete(T where) {
         Map map = getValues(where);
         Condition condition = new Condition(map);
@@ -124,6 +132,18 @@ public abstract class BaseDao<T> implements IBaseDao<T> {
         Cursor cursor = database.query(tableName, null, condition.getWhereClause()
                 , condition.getWhereArgs(), null, null, orderBy, limitString);
         List<T> result = getResult(cursor, where);
+        cursor.close();
+        return result;
+    }
+
+
+    @Override
+    public List<T> queryAll(Class<T> backClass) {
+
+        Cursor cursor=  database.rawQuery(" select * from "+tableName,null);
+
+      List<T> result =getResult(cursor,backClass);
+
         cursor.close();
         return result;
     }
@@ -174,6 +194,52 @@ public abstract class BaseDao<T> implements IBaseDao<T> {
         }
         return list;
     }
+    private List<T> getResult(Cursor cursor,Class <T> backClass) {
+        ArrayList list = new ArrayList();
+        Object item;
+        while (cursor.moveToNext()) {
+            try {
+                item = backClass.newInstance();
+                Iterator iterator = cacheMap.entrySet().iterator();
+                while (iterator.hasNext()) {
+                    Map.Entry entry = (Map.Entry) iterator.next();
+                    String colomunName = (String) entry.getKey();
+                    Integer colmunIndex = cursor.getColumnIndex(colomunName);
+                    Field field = (Field) entry.getValue();
+                    Class type = field.getType();
+                    if (colmunIndex != -1) {
+                        if (type == String.class) {
+                            //反射方式赋值
+                            field.set(item, cursor.getString(colmunIndex));
+                        } else if (type == Double.class) {
+                            field.set(item, cursor.getDouble(colmunIndex));
+                        } else if (type == Integer.class) {
+                            field.set(item, cursor.getInt(colmunIndex));
+                        } else if (type == Long.class) {
+                            field.set(item, cursor.getLong(colmunIndex));
+                        } else if (type == byte[].class) {
+                            field.set(item, cursor.getBlob(colmunIndex));
+                            /*
+                            不支持的类型
+                             */
+                        } else {
+                            continue;
+                        }
+                    }
+
+                }
+                list.add(item);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return list;
+    }
+
+
 
     private ContentValues getContentValues(Map<String, String> map) {
         ContentValues contentValues = new ContentValues();

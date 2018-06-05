@@ -80,4 +80,17 @@ public class WalletEntity {
     public void setKeyStore(String keyStore) {
         this.keyStore = keyStore;
     }
+
+
+    @Override
+    public String toString() {
+        return "WalletEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", miyao='" + miyao + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", pwdNotice='" + pwdNotice + '\'' +
+                ", keyStore='" + keyStore + '\'' +
+                '}';
+    }
 }

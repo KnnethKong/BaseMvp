@@ -25,4 +25,8 @@ public interface IBaseDao<T> {
 
 
     List<T> query(String sql);
+
+    List<T> queryAll(Class<T> backClass);
+
+    int deleteAll();
 }

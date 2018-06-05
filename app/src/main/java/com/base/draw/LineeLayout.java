@@ -50,9 +50,6 @@ public class LineeLayout extends ViewGroup {
             paddingRight = child.getPaddingRight();
             paddingTop = child.getPaddingTop();
             paddingBottom = child.getPaddingBottom();
-            Log.e("onMeasure ", "paddingLeft : " + paddingLeft + " paddingRight:  " + paddingRight + " paddingTop:" + paddingTop + "  paddingBottom:" + paddingBottom);
-
-
             int childWidth = paddingLeft + paddingRight + marginLayoutParams.leftMargin + marginLayoutParams.rightMargin + child.getMeasuredWidth();
             int childHeight = paddingTop + paddingBottom + marginLayoutParams.topMargin + marginLayoutParams.bottomMargin + child.getMeasuredHeight();
 
@@ -95,7 +92,6 @@ public class LineeLayout extends ViewGroup {
             paddingRight = child.getPaddingRight();
             paddingTop = child.getPaddingTop();
             paddingBottom = child.getPaddingBottom();
-            Log.e("onMeasure ", "paddingLeft : " + paddingLeft + " paddingRight:  " + paddingRight + " paddingTop:" + paddingTop + "  paddingBottom:" + paddingBottom);
 
 
             int childWidth = paddingLeft + paddingRight + marginLayoutParams.leftMargin + marginLayoutParams.rightMargin + child.getMeasuredWidth();
