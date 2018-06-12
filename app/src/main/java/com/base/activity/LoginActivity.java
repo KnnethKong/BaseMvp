@@ -18,8 +18,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Html;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,8 +38,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.base.keyboard.CustomKeyboard;
+import com.base.keyboard.MyKeyboardView;
 import com.base.mvp.R;
 
+import static android.Manifest.permission.CHANGE_WIFI_STATE;
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -69,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private EditText editText;
     private CustomKeyboard customKeyboard;
+    private TextView htmlText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        editText= (EditText) findViewById(R.id.login_test);
+        editText = (EditText) findViewById(R.id.login_test);
         //1 屏蔽掉系统默认输入法
         if (Build.VERSION.SDK_INT <= 10) {
             editText.setInputType(InputType.TYPE_NULL);
@@ -126,6 +131,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
+        inintHtml();
+    }
+
+    private void inintHtml() {
+        htmlText = (TextView) findViewById(R.id.login_txt);
+        String htmltext = "<p color=#49FF35>阅读这个<u color=#39B1FF>来来来协议证书</u><font color=#ff0000> llelsusjudsu </font><font color=#39B1FF> llelsusjudsu </font></p>";
+        htmlText.setText(Html.fromHtml(htmltext));
+        Log.e("kxflog", "inintHtml: " + htmlText.getText().toString());
+
     }
 
     private void populateAutoComplete() {
@@ -140,6 +154,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
         }
+
         if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }

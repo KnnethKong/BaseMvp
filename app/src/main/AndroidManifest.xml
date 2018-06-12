@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -35,13 +37,17 @@
         <activity
             android:name="com.base.activity.LoginActivity"
             android:label="@string/title_activity_login">
+
+        </activity>
+        <activity android:name="com.base.activity.SignActivity">
+
+        </activity>
+        <activity android:name="com.base.message.activity.EventActivityOne" />
+        <activity android:name="com.base.message.activity.EventActivityTwo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        <activity android:name="com.base.activity.SignActivity">
 
         </activity>
     </application>
