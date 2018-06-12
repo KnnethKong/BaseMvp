@@ -18,21 +18,24 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.base.keyboard.LoginKeyBoard;
+import com.base.keyboard.CustomKeyboard;
 import com.base.mvp.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -65,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private EditText editText;
+    private CustomKeyboard customKeyboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +82,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
+//                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+//                    attemptLogin();
+//                    return true;
+//                }
                 return false;
             }
         });
@@ -97,28 +101,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         editText= (EditText) findViewById(R.id.login_test);
-
-
-
-        final LoginKeyBoard loginActivity=new LoginKeyBoard(this);
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        //1 屏蔽掉系统默认输入法
+        if (Build.VERSION.SDK_INT <= 10) {
+            editText.setInputType(InputType.TYPE_NULL);
+        } else {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            try {
+                Class<EditText> cls = EditText.class;
+                Method setShowSoftInputOnFocus = cls.getMethod("setShowSoftInputOnFocus", boolean.class);
+                setShowSoftInputOnFocus.setAccessible(true);
+                setShowSoftInputOnFocus.invoke(editText, false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        //2 初试化键盘
+        MyKeyboardView keyboardView = (MyKeyboardView) findViewById(R.id.customKeyboard);
+        customKeyboard = new CustomKeyboard(LoginActivity.this, keyboardView, editText);
+        customKeyboard.showKeyboard();
+        editText.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    loginActivity.attachTo(editText);
-                }
+            public boolean onTouch(View v, MotionEvent event) {
+                customKeyboard.showKeyboard();
+                return false;
             }
         });
-
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (loginActivity.isAttached) loginActivity.showKeyboard();
-                else loginActivity.attachTo(editText);
-            }
-        });
-
-
     }
 
     private void populateAutoComplete() {

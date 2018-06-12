@@ -20,14 +20,28 @@ public class WalletEntity {
     public String pwdNotice;
     @DbFiled(value = "key_store")
     public String keyStore;
+    @DbFiled(value = "address")
+    public String address;
+    @DbFiled(value = "zjc")
+    public String zjc;
+    @DbFiled(value = "keystorepath")
+    public String keystorePath;
 
-    public WalletEntity(Long id, String name, String miyao, String pwd, String pwdNotice, String keyStore) {
-        this.id = id;
-        this.name = name;
-        this.miyao = miyao;
-        this.pwd = pwd;
-        this.pwdNotice = pwdNotice;
-        this.keyStore = keyStore;
+    public String getKeystorePath() {
+
+        return keystorePath;
+    }
+
+    public void setKeystorePath(String keystorePath) {
+        this.keystorePath = keystorePath;
+    }
+
+    public String getZjc() {
+        return zjc;
+    }
+
+    public void setZjc(String zjc) {
+        this.zjc = zjc;
     }
 
     public WalletEntity() {
@@ -81,6 +95,13 @@ public class WalletEntity {
         this.keyStore = keyStore;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     @Override
     public String toString() {
@@ -91,6 +112,9 @@ public class WalletEntity {
                 ", pwd='" + pwd + '\'' +
                 ", pwdNotice='" + pwdNotice + '\'' +
                 ", keyStore='" + keyStore + '\'' +
+                ", address='" + address + '\'' +
+                ", zjc='" + zjc + '\'' +
+                ", keystorePath='" + keystorePath + '\'' +
                 '}';
     }
 }

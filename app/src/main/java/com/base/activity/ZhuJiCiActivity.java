@@ -10,8 +10,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -20,18 +18,20 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.base.db.BaseDaoFactory;
 import com.base.db.IBaseDao;
 import com.base.db.WalletDao;
+import com.base.db.WalletDetailDB;
+import com.base.db.WalletDetailDao;
 import com.base.db.WalletEntity;
-import com.base.db.WalletItemEntity;
-import com.base.draw.JZCLayout;
 import com.base.draw.LineeLayout;
-import com.base.keyboard.LoginKeyBoard;
 import com.base.mvp.R;
 import com.base.tools.ArrayUtils;
 import com.base.wallet.WalletCoinDetailEntity;
 
-import java.lang.reflect.Array;
+import org.reactivestreams.Subscriber;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * Created by KXF on 2018/5/24.
@@ -46,7 +46,6 @@ public class ZhuJiCiActivity extends AppCompatActivity implements View.OnClickLi
     private List<String> tempList = new ArrayList<>();
     private SwipeToLoadLayout swipeToLoadLayout;
     private IBaseDao<WalletEntity> walletEntityIBaseDao;
-    private IBaseDao<WalletItemEntity> walletItemEntityIBaseDao;
     private EditText zjcedit;
 
     @Override
@@ -96,7 +95,7 @@ public class ZhuJiCiActivity extends AppCompatActivity implements View.OnClickLi
         localDatas.add("content");
         localDatas.add("build");
         localDatas.add("edit");
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 insert();
@@ -114,23 +113,46 @@ public class ZhuJiCiActivity extends AppCompatActivity implements View.OnClickLi
 //
 //        Long i = walletEntityIBaseDao.insert(walletEntity);
 //        Log.e(TAG, "insert: " + i);
-        WalletEntity queryEntity = new WalletEntity();
-        //queryEntity.setName("ht");
-        List<WalletEntity> list1 = walletEntityIBaseDao.query(
-                queryEntity
-        );
-        List<WalletEntity> list2 = walletEntityIBaseDao.queryAll(WalletEntity.class);
-        for (int i=0;i<list1.size();i++){
-            WalletEntity walletEntity=list1.get(i);
-            WalletEntity walletEntity2=list2.get(i);
+//        WalletEntity queryEntity = new WalletEntity();
+//        //queryEntity.setName("ht");
+//        List<WalletEntity> list1 = walletEntityIBaseDao.query(
+//                queryEntity
+//        );
+//        List<WalletEntity> list2 = walletEntityIBaseDao.queryAll(WalletEntity.class);
 
-            Log.e(TAG, "walletEntity: " + walletEntity.toString()+ "  ");
-            Log.e(TAG, "walletEntity2: " + walletEntity2.toString()+ "  ");
+        List<WalletEntity> dbs = walletEntityIBaseDao.query(new WalletEntity(), "  id desc ", 0, 1);
+
+        for (int i = 0; i < dbs.size(); i++) {
+            WalletEntity walletEntity = dbs.get(i);
+
+            Log.e(TAG, "walletEntity: " + walletEntity.toString() + "  ");
+
+        }
+        IBaseDao<WalletDetailDB>
+                walletDetailDao = BaseDaoFactory.getInstance().getDataHelper(WalletDetailDao.class, WalletDetailDB.class);
+        WalletDetailDB walletDetailDB = new WalletDetailDB();
+        walletDetailDB.setId(System.currentTimeMillis());
+        walletDetailDB.setWalletId(12384738234L);
+        walletDetailDB.setCoinName("HT币中");
+        walletDetailDB.setCoinCny(123);
+        walletDetailDB.setCoinAddress("sdxhsuwesnyansuydnh374jdxysny3ydjeu");
+        walletDetailDB.setCoinNum(8);
+        walletDetailDB.setCoinPrice(2838483 / 1000L);
+        walletDetailDao.insert(walletDetailDB);
+
+        List<WalletDetailDB> detailDBS = walletDetailDao.queryAll(WalletDetailDB.class);
+
+
+
+
+
+        for (int i = 0; i < detailDBS.size(); i++) {
+            WalletDetailDB walletEntity = detailDBS.get(i);
+            Log.e(TAG, "WalletDetailDB : " + walletEntity.toString() + "  ");
 
         }
 
-
-       // Log.e(TAG, "list: " + list1.size() + "  ");
+        // Log.e(TAG, "list: " + list1.size() + "  ");
 //        Log.e(TAG, "list2  : " + list2.size() + "  ");
 
 //        WalletEntity updateEntity = new WalletEntity();
@@ -236,4 +258,5 @@ public class ZhuJiCiActivity extends AppCompatActivity implements View.OnClickLi
             }
         }, 600);
     }
+
 }

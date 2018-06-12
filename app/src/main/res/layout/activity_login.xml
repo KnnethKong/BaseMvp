@@ -1,12 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.base.activity.LoginActivity">
 
@@ -23,8 +21,7 @@
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/include">
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -56,7 +53,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
@@ -83,17 +79,20 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.base.keyboard.MyKeyBoardView
-        android:id="@+id/keyboard_view"
+
+    <com.base.keyboard.MyKeyboardView
+        android:id="@+id/customKeyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="#e6e6e6"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:keyBackground="@drawable/bg_keyboardview"
-        android:keyPreviewOffset="0dp"
-        android:keyTextColor="#000"
-        android:paddingTop="0dp"
-        android:shadowColor="#fff"
-        android:shadowRadius="0.0" />
+        android:keyBackground="@drawable/bg_keyboard_btn"
+        android:keyTextColor="#000000"
+        android:keyTextSize="31dp"
+        android:labelTextSize="20sp"
+        android:shadowRadius="0" />
+
 </RelativeLayout>
