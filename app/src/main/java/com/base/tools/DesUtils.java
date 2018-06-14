@@ -1,5 +1,10 @@
 package com.base.tools;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -23,13 +28,20 @@ public class DesUtils {
     public static void main(String[] args) {
         DesUtils desTest = new DesUtils();
         try {
-            String encypt = desTest.encrypt("三九四九,dhw3773ydhye,2927ehd73h7ush2,3847372737bdh");
-            System.out.println(encypt);
-
+            String md5key = "1243728su2_74ssw8/94";
+            String password = "xjsuwosauwj237";
+            String passwordMD5 = MD5Utils.toHex(MD5Utils.md5(password + md5key));
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", "kong");
+            jsonObject.put("pwd", passwordMD5);
+            jsonObject.put("age", 22);
+            String encypt = desTest.encrypt("1111");
+            Log.e("kxflog", "sign: " + encypt);
             String decrypt = desTest.decrypt(encypt);
-            System.out.println(decrypt);
-
+            Log.e("kxflog", "sign: " + decrypt);
         } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
@@ -37,7 +49,7 @@ public class DesUtils {
     /**
      * 安全密钥
      */
-    private String keyData = "ABCDEFGHIJKLMNOPQRSTWXYZabcdefghijklmnopqrstwxyz0123456789-_.";
+    private String keyData = "duskei_dueu7/32_2333239_4838363ess293w74jsuw";
 
     /**
      * 功能：加密 (UTF-8)

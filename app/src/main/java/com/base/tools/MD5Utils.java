@@ -13,7 +13,7 @@ public class MD5Utils {
     private static String ENCODE = "UTF-8";
 
     public static void main(String[] args) {
-        String content = "我当时,第二次,2927ehd73h7ush2,3847372737bdh";
+        String content = "847372737bdh";
         String key = "kjssuw/-";
         String hex = toHex(md5(content+key));
         System.err.println(hex);

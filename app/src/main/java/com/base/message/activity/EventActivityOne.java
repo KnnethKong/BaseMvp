@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.message.EventMes;
+import com.base.mvp.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -20,18 +21,21 @@ public class EventActivityOne extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        txt1 = new TextView(this);
-        LinearLayout.LayoutParams txt1Layout = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        txt1Layout.gravity = LinearLayout.TEXT_ALIGNMENT_GRAVITY;
-        txt1.setLayoutParams(txt1Layout);
-        txt1.setText("one  ----click\uF8FF");
-        txt1.setId((int) 28394);
-        txt1.setOnClickListener(this);
-        txt1.setTextSize(20);
-        linearLayout.addView(txt1);
-        setContentView(linearLayout);
+//        LinearLayout linearLayout = new LinearLayout(this);
+//        linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//        txt1 = new TextView(this);
+//        LinearLayout.LayoutParams txt1Layout = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        txt1Layout.gravity = LinearLayout.TEXT_ALIGNMENT_GRAVITY;
+//        txt1.setLayoutParams(txt1Layout);
+//        txt1.setText("one  ----click   ");
+//        txt1.setId((int) 28394);
+//        txt1.setOnClickListener(this);
+//        txt1.setTextSize(20);
+//        linearLayout.addView(txt1);
+        setContentView(R.layout.test);
+        txt1= (TextView) findViewById(R.id.txt);
+
+
     }
 
     @Override

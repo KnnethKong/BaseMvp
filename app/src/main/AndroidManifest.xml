@@ -44,11 +44,14 @@
         </activity>
         <activity android:name="com.base.message.activity.EventActivityOne" />
         <activity android:name="com.base.message.activity.EventActivityTwo">
+
+
+        </activity>
+        <activity android:name="com.base.activity.QrcodeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 
