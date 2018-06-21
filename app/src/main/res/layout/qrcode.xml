@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#367AEF"
-    android:orientation="vertical">
+    android:background="#367AEF">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/qrcode_bg">
 
@@ -31,40 +30,64 @@
             android:drawableRight="@drawable/xiajiantou"
             android:text="CIT" />
 
-
-        <ImageView
-            android:id="@+id/qrcode_img"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_below="@id/qrcode_name"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:src="@mipmap/ic_launcher" />
-
         <TextView
-            android:id="@+id/qrcode_amount"
-
+            android:id="@+id/qrcode_amount_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/qrcode_img"
+            android:layout_below="@id/qrcode_name"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:text="设置收款金额"
             android:textColor="#367AEF"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/qrcode_amount_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/qrcode_amount_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="14dp"
+            android:text="123.3728"
+            android:textColor="#367AEF"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/qrcode_amount_wy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/qrcode_amount_value"
+            android:layout_alignLeft="@id/qrcode_amount_value"
+            android:layout_marginTop="14dp"
+            android:text="¥"
+            android:textColor="#367AEF"
+            android:textSize="18sp" />
+
+
+        <ImageView
+            android:id="@+id/qrcode_img"
+            android:layout_width="222dp"
+            android:layout_height="218dp"
+            android:layout_below="@id/qrcode_amount_value"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/qrcode_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/qrcode_amount"
+            android:layout_below="@id/qrcode_img"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:text="ssddd77sg63h73hr7e37dj28end73ud3j8j38rj28ejd83jd82j83d73h72d72h8"
+            android:text="ssddd77sg63h73hr7e/37dj28end73ud3j8j38rj28e/d/76gjd83jd82j83d73h72d72h8"
             android:textColor="@color/dimgrey"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/qrcode_cope"
@@ -80,4 +103,4 @@
     </RelativeLayout>
 
 
-</LinearLayout>
+</ScrollView>

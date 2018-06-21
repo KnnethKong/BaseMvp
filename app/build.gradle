@@ -49,5 +49,7 @@ dependencies {
     implementation 'com.google.android:flexbox:0.3.2'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.24'
     implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.2'
+    implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.2'
 
 }

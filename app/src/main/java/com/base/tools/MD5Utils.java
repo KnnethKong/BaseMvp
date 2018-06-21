@@ -1,6 +1,9 @@
 package com.base.tools;
 
 import java.security.MessageDigest;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by KXF on 2018/5/25.
@@ -15,7 +18,7 @@ public class MD5Utils {
     public static void main(String[] args) {
         String content = "847372737bdh";
         String key = "kjssuw/-";
-        String hex = toHex(md5(content+key));
+        String hex = toHex(md5(content + key));
         System.err.println(hex);
     }
 
@@ -30,6 +33,18 @@ public class MD5Utils {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public static String params(Map<String, Object> param) {
+        Set<String> keySet = param.keySet();
+        Iterator<String> iterator = keySet.iterator();
+        StringBuilder stringBuilder = new StringBuilder(100);
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            stringBuilder.append(key + "=" + param.get(key) + "&");
+        }
+        String result = stringBuilder.substring(0, stringBuilder.length() - 1);
+        return result;
     }
 
     public static final String toHex(byte hash[]) {
@@ -59,12 +74,9 @@ public class MD5Utils {
     /**
      * 对密码按照用户名，密码，盐进行加密
      *
-     * @param username
-     *            用户名
-     * @param password
-     *            密码
-     * @param salt
-     *            盐
+     * @param username 用户名
+     * @param password 密码
+     * @param salt     盐
      * @return
      */
     public static String encryptPassword(String username, String password, String salt) {
@@ -74,10 +86,8 @@ public class MD5Utils {
     /**
      * 对密码按照密码，盐进行加密
      *
-     * @param password
-     *            密码
-     * @param salt
-     *            盐
+     * @param password 密码
+     * @param salt     盐
      * @return
      */
     public static String encryptPassword(String password, String salt) {
